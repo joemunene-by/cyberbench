@@ -1,0 +1,21 @@
+id: sigma-004-office-spawns-shell
+category: detection_rule
+type: sigma_rule
+
+prompt: |
+  Write a SIGMA rule (in a ```yaml code block) that detects Microsoft Office applications
+  spawning command-line interpreters — a strong indicator of macro-based malware. Trigger
+  on process creation where the parent image is one of
+  `winword.exe`, `excel.exe`, `powerpnt.exe`, or `outlook.exe`, and the child image is
+  one of `cmd.exe`, `powershell.exe`, `pwsh.exe`, `wscript.exe`, or `cscript.exe`.
+
+  Include `title`, `id`, `status`, `description`, `logsource` (product: windows,
+  category: process_creation), `detection`, and `condition`.
+
+requirements:
+  must_have_fields: [title, detection, condition, logsource]
+  detection_keys_should_include: [ParentImage, Image]
+  expected_logsource_product: windows
+
+metadata:
+  attack_technique: T1204.002

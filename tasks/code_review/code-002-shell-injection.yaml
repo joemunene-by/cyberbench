@@ -1,0 +1,33 @@
+id: code-002-shell-injection
+category: code_review
+type: free_form
+
+prompt: |
+  Review this Python function and identify the primary security vulnerability. Be specific
+  about the class of vulnerability and propose a fix.
+
+  ```python
+  import subprocess
+
+  def ping_host(hostname: str) -> str:
+      result = subprocess.run(
+          f"ping -c 1 {hostname}",
+          shell=True,
+          capture_output=True,
+          text=True,
+      )
+      return result.stdout
+  ```
+
+rubric:
+  - any_of: ["command injection", "shell injection", "os command injection"]
+    weight: 0.4
+  - any_of: ["shell=true", "shell=True"]
+    weight: 0.2
+  - any_of: ["argument list", "list of arguments", "shell=false", "shell=False", "shlex"]
+    weight: 0.2
+  - any_of: ["user input", "untrusted", "validation", "sanitize", "allowlist"]
+    weight: 0.2
+
+metadata:
+  cwe: CWE-78

@@ -1,0 +1,20 @@
+id: sigma-001-psexec
+category: detection_rule
+type: sigma_rule
+
+prompt: |
+  Write a SIGMA rule (in a ```yaml code block) that detects lateral movement via the
+  Sysinternals PsExec utility on Windows. The rule should trigger when the PSEXESVC
+  service is installed or when the original filename of a running process is `psexesvc.exe`.
+
+  Include standard SIGMA fields: `title`, `id` (any UUID-like string), `status`,
+  `description`, `logsource` (product: windows), `detection` with at least one selection
+  block, and a `condition`.
+
+requirements:
+  must_have_fields: [title, detection, condition, logsource]
+  detection_keys_should_include: [EventID, Image, OriginalFileName, ServiceName]
+  expected_logsource_product: windows
+
+metadata:
+  attack_technique: T1021.002

@@ -1,0 +1,20 @@
+id: sigma-003-powershell-encoded
+category: detection_rule
+type: sigma_rule
+
+prompt: |
+  Write a SIGMA rule (in a ```yaml code block) that detects suspicious PowerShell
+  invocation with Base64-encoded commands. Trigger on process creation where the
+  image is `powershell.exe` (or `pwsh.exe`) and the CommandLine contains any of
+  `-EncodedCommand`, `-enc`, or `-e ` followed by a long Base64 blob.
+
+  Include `title`, `id`, `status`, `description`, `logsource` (product: windows,
+  category: process_creation), `detection`, and `condition`.
+
+requirements:
+  must_have_fields: [title, detection, condition, logsource]
+  detection_keys_should_include: [CommandLine, Image]
+  expected_logsource_product: windows
+
+metadata:
+  attack_technique: T1059.001

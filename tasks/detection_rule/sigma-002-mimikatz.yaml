@@ -1,0 +1,21 @@
+id: sigma-002-mimikatz
+category: detection_rule
+type: sigma_rule
+
+prompt: |
+  Write a SIGMA rule (in a ```yaml code block) that detects common Mimikatz usage on
+  Windows. Trigger on process creation where the command line contains signature
+  strings such as `sekurlsa::`, `privilege::debug`, `lsadump::`, or where the image
+  name matches `mimikatz.exe`.
+
+  Include standard SIGMA fields: `title`, `id`, `status`, `description`, `logsource`
+  (product: windows, category: process_creation), `detection` with one or more
+  selections, and a `condition`.
+
+requirements:
+  must_have_fields: [title, detection, condition, logsource]
+  detection_keys_should_include: [CommandLine, Image, OriginalFileName]
+  expected_logsource_product: windows
+
+metadata:
+  attack_technique: T1003.001

@@ -1,0 +1,30 @@
+id: code-003-path-traversal
+category: code_review
+type: free_form
+
+prompt: |
+  Review this Python function and identify the primary security vulnerability. Be specific
+  about the class of vulnerability and propose a fix.
+
+  ```python
+  from pathlib import Path
+
+  UPLOADS = Path("/var/app/uploads")
+
+  def read_upload(filename: str) -> bytes:
+      full_path = UPLOADS / filename
+      return full_path.read_bytes()
+  ```
+
+rubric:
+  - any_of: ["path traversal", "directory traversal", "lfi", "local file inclusion"]
+    weight: 0.4
+  - any_of: ["..", "dot-dot"]
+    weight: 0.2
+  - any_of: ["resolve", "realpath", "is_relative_to", "startswith", "commonpath"]
+    weight: 0.2
+  - any_of: ["sanitize", "validate", "allowlist", "normalize", "canonical"]
+    weight: 0.2
+
+metadata:
+  cwe: CWE-22

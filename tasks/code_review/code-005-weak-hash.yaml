@@ -1,0 +1,27 @@
+id: code-005-weak-hash
+category: code_review
+type: free_form
+
+prompt: |
+  Review this password-hashing function. Identify the primary security issue and propose
+  a fix.
+
+  ```python
+  import hashlib
+
+  def hash_password(password: str) -> str:
+      return hashlib.md5(password.encode()).hexdigest()
+  ```
+
+rubric:
+  - any_of: ["md5", "weak hash", "broken", "insecure hash"]
+    weight: 0.3
+  - any_of: ["bcrypt", "scrypt", "argon2", "pbkdf2"]
+    weight: 0.3
+  - any_of: ["salt", "salting", "rainbow table"]
+    weight: 0.2
+  - any_of: ["fast", "gpu", "brute force", "work factor", "cost factor", "iterations"]
+    weight: 0.2
+
+metadata:
+  cwe: CWE-327

@@ -1,0 +1,30 @@
+id: code-004-xss
+category: code_review
+type: free_form
+
+prompt: |
+  Review this Flask route and identify the primary security vulnerability. Be specific
+  about the class of vulnerability and propose a fix.
+
+  ```python
+  from flask import Flask, request
+  from markupsafe import Markup
+
+  app = Flask(__name__)
+
+  @app.route("/greet")
+  def greet():
+      name = request.args.get("name", "")
+      return f"<h1>Hello, {Markup(name)}!</h1>"
+  ```
+
+rubric:
+  - any_of: ["xss", "cross-site scripting"]
+    weight: 0.4
+  - any_of: ["markup", "unsafe", "escape", "autoescape"]
+    weight: 0.3
+  - any_of: ["render_template", "escape", "html.escape", "jinja"]
+    weight: 0.3
+
+metadata:
+  cwe: CWE-79

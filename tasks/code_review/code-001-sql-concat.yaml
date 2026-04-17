@@ -1,0 +1,29 @@
+id: code-001-sql-concat
+category: code_review
+type: free_form
+
+prompt: |
+  Review this Python function and identify the primary security vulnerability. Be specific
+  about the class of vulnerability and propose a fix.
+
+  ```python
+  import sqlite3
+
+  def get_user(db_path: str, username: str):
+      conn = sqlite3.connect(db_path)
+      cursor = conn.cursor()
+      query = "SELECT id, email FROM users WHERE username = '" + username + "'"
+      cursor.execute(query)
+      return cursor.fetchone()
+  ```
+
+rubric:
+  - must_mention: "sql injection"
+    weight: 0.4
+  - any_of: ["parameterized", "prepared statement", "placeholder", "bind"]
+    weight: 0.3
+  - any_of: ["user input", "untrusted", "concatenation", "string formatting"]
+    weight: 0.3
+
+metadata:
+  cwe: CWE-89

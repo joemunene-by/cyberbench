@@ -1,0 +1,20 @@
+id: sigma-005-ssh-brute-force
+category: detection_rule
+type: sigma_rule
+
+prompt: |
+  Write a SIGMA rule (in a ```yaml code block) that detects SSH brute-force attempts on
+  Linux. Trigger on auth-log entries from sshd with messages matching
+  `Failed password for`, with a threshold-style condition (e.g., 10 events per source
+  within 5 minutes).
+
+  Include `title`, `id`, `status`, `description`, `logsource` (product: linux,
+  service: sshd), `detection`, and `condition`.
+
+requirements:
+  must_have_fields: [title, detection, condition, logsource]
+  detection_keys_should_include: [message, program, service]
+  expected_logsource_product: linux
+
+metadata:
+  attack_technique: T1110.001
